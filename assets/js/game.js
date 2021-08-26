@@ -65,25 +65,50 @@ var fight = function(enemyName) {
   }
 };
 
-for(var i= 0; i < enemyNames.length; i++) {
+// function to start a new game
+var startGame = function() {
+  // reset player stats
+  playerHealth = 100;
+  playerAttack = 10;
+  playerMoney = 10;
+
+  for(var i= 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+      //let the player know what round they are in
+      window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
+  
+      //pick new enemy to fight based on the index of the enemyNames array
+      var pickedEnemyName = enemyNames[i];
+    
+      //reset enemyHealth before starting new fight
+      enemyHealth = 50;
+  
+      // debugger
+    
+      //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
+      fight(enemyNames[i]);
+    } 
+    //if the player is not alive stop the game
+    else {
+      window.alert("You have lost your robot in battle! Game Over!");
+      break;
+    }
+  }
+  // after the loop ends, player is either out of health or enemies to fight, run endGame
+  endGame()
+
+  // play again
+  startGame();
+};
+
+var endGame = function() {
+  // if player is still alive, player wins!
   if (playerHealth > 0) {
-    //let the player know what round they are in
-    window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
-
-    //pick new enemy to fight based on the index of the enemyNames array
-    var pickedEnemyName = enemyNames[i];
-  
-    //reset enemyHealth before starting new fight
-    enemyHealth = 50;
-
-    // debugger
-  
-    //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
-    fight(enemyNames[i]);
-  } 
-  //if the player is not alive stop the game
+    window.alert("The game has now ended. Let's see how you did!");
+  }
   else {
-    window.alert("You have lost your robot in battle! Game Over!");
-    break;
+    window.alert("You've lost your robot in battle.");
   }
 }
+
+startGame();
